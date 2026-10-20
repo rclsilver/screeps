@@ -11,6 +11,7 @@ Salle de départ : **W2N2**, Spawn1 en **(14, 26)**.
 - `scripts/api.sh` : inspection du joueur, du code, de la mémoire et de la salle en lecture seule.
 - `docs/STRATEGY.md` : priorités, limites et suivi de la colonie.
 - `.env.example` : noms des identifiants requis, sans valeurs réelles.
+- `flake.nix` et `flake.lock` : environnement de développement Nix verrouillé.
 
 Le dépôt est dans le dossier de scripts du client. Modifier `main.js` revient à
 préparer une publication par la synchronisation Steam : vérifier les changements
@@ -19,13 +20,28 @@ autre fichier JavaScript de jeu n'est nécessaire à la racine.
 
 ## Développement
 
-Node.js 20 ou supérieur et Bash sont requis pour les contrôles locaux. Aucun
-paquet npm ni service externe n'est nécessaire au fonctionnement de la colonie.
+La flake fournit Node.js 24 LTS avec npm, Bash et les outils de lecture de l'API.
+Le fichier `flake.lock` fixe la révision de nixpkgs pour reproduire cet
+environnement. Avec Nix et les fonctionnalités `nix-command` et `flakes`
+activées :
 
 ```sh
+nix develop
 npm run check
 npm test
 ```
+
+Les commandes peuvent aussi s'exécuter directement, sans ouvrir de shell :
+
+```sh
+nix develop --command npm run check
+nix develop --command npm test
+nix develop --command npm run inspect
+```
+
+Sans Nix, Node.js 20 ou supérieur et les outils listés ci-dessous doivent être
+disponibles sur le poste. Aucun paquet npm ni service externe n'est nécessaire
+au fonctionnement de la colonie ; il n'y a pas de dépendances à installer.
 
 Les tests utilisent un monde Screeps simulé, avec un scénario indépendant par
 test. Ils vérifient notamment les budgets de création, le remplacement des creeps,
