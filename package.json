@@ -1,0 +1,13 @@
+{
+  "name": "screeps-rclsilver",
+  "version": "0.2.0",
+  "private": true,
+  "description": "Autonomous early colony for the private Screeps world",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "check": "node --check main.js && bash -n scripts/api.sh",
+    "test": "node --test test/main.test.cjs",
+    "inspect": "bash scripts/api.sh inspect",
+    "observe": "bash scripts/api.sh memory"
+  }
+}
